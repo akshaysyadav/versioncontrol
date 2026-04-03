@@ -1,1 +1,14 @@
-# Fixing Terminal Issue in Controllers Folder\n\n## Steps Completed ✅\n\n1. Removed broken server.js require/command from backend/index.js\n2. Fixed mismatched function names/exports in init.js and commit.js\n3. Created/fixed stubs for all controllers: pull.js, push.js, revert.js\n4. Fixed index.js structure\n5. Tested CLI: --help works, init/add/commit/push/pull/revert all run without crash (stubs log messages)\n\n## Next (Optional)\n- Add real deps/logic (simple-git, aws-sdk)\n- npm install\n\nTerminal issue resolved: No more module/server errors, all commands functional stubs.
+# mygit Issue Fix Plan
+
+## Steps:
+- [x] Step 1: Fix backend/controllers/commit.js (JSON.stringify, add .mygit/staging validations, improve errors, clear staging). 
+- [x] Step 2: Test commit in new/existing repo.
+To test:
+cd backend
+node index.js init
+echo test > test.txt
+node index.js add test.txt
+node index.js commit \"first commit\"
+Expect: Committed with ID: [uuid]
+- [ ] Step 3: Verify other controllers if needed.
+- [ ] Step 4: Complete (attempt_completion).

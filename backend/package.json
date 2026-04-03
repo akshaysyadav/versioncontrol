@@ -9,6 +9,9 @@
   "license": "ISC",
   "description": "Version control backend service",
   "dependencies": {
+    "commit": "^0.0.4",
+    "first": "^0.0.3",
+    "uuid": "^13.0.0",
     "yargs": "^18.0.0"
   }
 }
