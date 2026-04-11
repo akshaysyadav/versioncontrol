@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "Version control backend service",
   "dependencies": {
+    "aws-sdk": "^2.1693.0",
     "commit": "^0.0.4",
     "first": "^0.0.3",
     "uuid": "^13.0.0",
