@@ -12,6 +12,7 @@ const { pullRepo } = require('./controllers/pull');
 const { revertRepo } = require('./controllers/revert');
 
 yargs(hideBin(process.argv))
+  .command("start", "Start new server", {}, startServer)
   .command("init", "Initialise a new repository", {}, initRepo)
   .command(
     "add <file>",
@@ -56,3 +57,7 @@ yargs(hideBin(process.argv))
   )
   .demandCommand(1, 'You need at least one command before moving on')
   .help().argv;
+
+  function startServer() {
+    console.log("Server started...");
+  }
