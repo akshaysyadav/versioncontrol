@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
 const { Server } = require('socket.io');
+const mainRouter = require('./routes/main.router');
 
 const yargs = require('yargs');
 const {hideBin} = require('yargs/helpers');
@@ -82,10 +83,8 @@ yargs(hideBin(process.argv))
       console.error("Error connecting to MongoDB:", err);
     });
 
-    app.get('/', (req, res) => {
-      res.send('Hello');
-    });
 
+    app.use('/', mainRouter);
 //temp user
     let user = "testUser";
 
