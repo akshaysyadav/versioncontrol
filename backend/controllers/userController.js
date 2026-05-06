@@ -126,13 +126,70 @@ async function getUserProfile(req, res) {
     }
 }
 
-async function updateUserProfile (req, res) {
-    res.send("update user profile");
+async function updateUserProfile(req, res) {
+    const userId = req.params.id;
+    const updateData = req.body;
+
+    if (!ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: "Invalid ID" });
+    }
+    try {
+        await connectClient();
+        const db = client.db('versionControl');
+        const usersCollection = db.collection('users');
+
+        const result = await usersCollection.findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { $set: updateData },
+            { returnDocument: 'after' } 
+        );
+
+        console.log("Update result:", result);
+
+        if (!result) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        delete result.password; 
+
+        return res.status(200).json({
+            message: "Profile updated",
+            user: result
+        });
+
+    } catch (error) {
+        console.error("Error during updating:", error);
+        return res.status(500).json({ message: "Server error" });
+    }
 }
 
-async function deleteUserProfile (req, res) {
-    res.send("delete user profile");
-}   
+async function deleteUserProfile(req, res) {
+  const currentID = req.params.id;
+
+  if (!ObjectId.isValid(currentID)) {
+    return res.status(400).json({ message: "Invalid ID" });
+  }
+
+  try {
+    await connectClient();
+    const db = client.db("versionControl"); 
+    const usersCollection = db.collection("users");
+
+    const result = await usersCollection.deleteOne({
+      _id: new ObjectId(currentID),
+    });
+
+    if (result.deletedCount === 0) { 
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    return res.status(200).json({ message: "User Profile Deleted!" });
+
+  } catch (err) {
+    console.error("Error during delete:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+}
 
 module.exports = {
     getAllUsers,
