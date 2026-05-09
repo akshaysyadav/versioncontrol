@@ -14,10 +14,10 @@ const Dashboard = () => {
     const fetchRepositories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/repo/user/${userId}`
+          `http://localhost:3000/repo/${userId}`
         );
         const data = await response.json();
-        setRepositories(data.repositories);
+        setRepositories(data.repositories || []);
       } catch (err) {
         console.error("Error while fecthing repositories: ", err);
       }
@@ -27,7 +27,7 @@ const Dashboard = () => {
       try {
         const response = await fetch(`http://localhost:3000/repo/all`);
         const data = await response.json();
-        setSuggestedRepositories(data);
+        setSuggestedRepositories(data || []);
         console.log(suggestedRepositories);
       } catch (err) {
         console.error("Error while fecthing repositories: ", err);
@@ -55,7 +55,7 @@ const Dashboard = () => {
       <section id="dashboard">
         <aside>
           <h3>Suggested Repositories</h3>
-          {suggestedRepositories.map((repo) => {
+          {suggestedRepositories && suggestedRepositories.map((repo) => {
             return (
               <div key={repo._id}>
                 <h4>{repo.name}</h4>
@@ -74,7 +74,7 @@ const Dashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          {searchResults.map((repo) => {
+          {searchResults && searchResults.map((repo) => {
             return (
               <div key={repo._id}>
                 <h4>{repo.name}</h4>
