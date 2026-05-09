@@ -71,8 +71,7 @@ async function signUp(req, res) {
         );
 
         return res.status(201).json({
-            message: 'User created successfully',
-            token
+            token, userId : result.insertedId
         });
 
     } catch (error) {
